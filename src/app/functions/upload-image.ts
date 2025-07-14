@@ -3,6 +3,7 @@ import z from 'zod'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { type Either, makeLeft, makeRight } from '@/infra/shared/either'
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
 import { InvalidFileFormat } from './errors/invalid-file-format'
 
 const uploadImageInput = z.object({
@@ -22,13 +23,18 @@ export async function uploadImage(input: UploadImageInput): Promise<Either<Inval
     return makeLeft(new InvalidFileFormat())
   }
 
-  // TODO: Carregar imagem para o Cloudflare R2
+  const { key, url } = await uploadFileToStorage({
+    fileName,
+    contentType,
+    contentStream,
+    folder: 'images',
+  })
 
   await db.insert(schema.uploads).values({
     name: fileName,
-    remoteKey: fileName,
-    remoteUrl: fileName,
+    remoteKey: key,
+    remoteUrl: url,
   })
 
-  return makeRight({ url: '' })
+  return makeRight({ url })
 }

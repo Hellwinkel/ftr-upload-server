@@ -1,1 +1,1 @@
-CREATE DATABASE upload_teste;
+CREATE DATABASE upload_test;

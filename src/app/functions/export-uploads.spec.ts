@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { beforeAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { isRight, unwrapEither } from '@/infra/shared/either'
 import * as upload from '@/infra/storage/upload-file-to-storage'
 import { makeUpload } from '@/test/factories/make-uploads'

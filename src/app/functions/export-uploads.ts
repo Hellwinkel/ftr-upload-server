@@ -36,7 +36,7 @@ export async function exportUploads(
     )
     .toSQL()
 
-  const cursor = pg.unsafe(sql, params as string[]).cursor(2)
+  const cursor = pg.unsafe(sql, params as string[]).cursor(50)
 
   const csv = stringify({
     delimiter: ',',

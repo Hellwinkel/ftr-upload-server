@@ -86,7 +86,7 @@ export async function exportUploads(
     contentStream: uploadToStorageStream,
   })
 
-  await Promise.all([convertToCSVPipeline, uploadToStorage])
+  const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
 
-  return makeRight({ reportUrl: '' })
+  return makeRight({ reportUrl: url })
 }

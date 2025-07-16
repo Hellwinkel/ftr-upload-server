@@ -20,7 +20,10 @@ export const isRight = <T, U>(e: Either<T, U>): e is Right<U> => {
 
 export type UnwrapEither = <T, U>(e: Either<T, U>) => NonNullable<T | U>
 
-export const unwrapEither: UnwrapEither = <T, U>({ left, right }: Either<T, U>) => {
+export const unwrapEither: UnwrapEither = <T, U>({
+  left,
+  right,
+}: Either<T, U>) => {
   if (right !== undefined && left !== undefined) {
     throw new Error(
       `Received both left and right values at runtime when opening an Either\nLeft: ${JSON.stringify(
@@ -37,7 +40,9 @@ export const unwrapEither: UnwrapEither = <T, U>({ left, right }: Either<T, U>) 
     return right as NonNullable<U>
   }
 
-  throw new Error('Received no left or right values at runtime when opening Either')
+  throw new Error(
+    'Received no left or right values at runtime when opening Either'
+  )
 }
 
 export const makeLeft = <T>(value: T): Left<T> => ({ left: value })
